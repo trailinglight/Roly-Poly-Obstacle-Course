@@ -13,6 +13,7 @@ public class Rolling : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PrintInstruction();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -24,9 +25,16 @@ public class Rolling : MonoBehaviour
 
     private void FixedUpdate()
     {
-        forceMovement();
+        ForceMovement();
     }
 
+    //Prints instructions to the console
+    void PrintInstruction()
+    {
+        Debug.Log("Welcome to the Roly-Poly Obstacel Course!");
+        Debug.Log("Move the player with WASD or the arrow keys.");
+        Debug.Log("Avoid walls to the best of your abilities.");
+    }
 
     //method taking axis inputs to move player
     void Movement()
@@ -38,7 +46,7 @@ public class Rolling : MonoBehaviour
     }
 
     //method taking axis inputs to apply force to player
-    void forceMovement()
+    void ForceMovement()
     {
         //variables that grab keyboard movement inputs
         float xForce = Input.GetAxis("Horizontal");
@@ -49,4 +57,5 @@ public class Rolling : MonoBehaviour
         //transform.Translate(new Vector3(xForce, 0, yForce) * Time.deltaTime);
         
     }
+
 }
