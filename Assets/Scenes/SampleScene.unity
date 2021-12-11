@@ -1943,16 +1943,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcfe25509d493ed4295aca7c99f98632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 76453666}
-  yDistance: 5
-  zDistance: 2
-  sensitivity: 0.001
-  lerpDuration: 0.1
+  smoothness: 1.9
+  relativePosition: 0
+  position1: {x: 0, y: 4, z: -6}
+  position2: {x: 0, y: 4, z: 4}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1960,7 +1960,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 

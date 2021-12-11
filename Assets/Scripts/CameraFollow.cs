@@ -6,64 +6,66 @@ public class CameraFollow : MonoBehaviour
 {
     [SerializeField]
     Transform playerTransform;
-
     [SerializeField]
-    float yDistance, zDistance, sensitivity;
+    float smoothness;
 
+    
+    Vector3 intialOffset;
+    Vector3 cameraPosition;
+
+    
+    enum RelativePosition {InitialPosition, Position1, Position2}
+    
     [SerializeField]
-    float lerpDuration;
+    RelativePosition relativePosition;
+    [SerializeField]
+    Vector3 position1;
+    [SerializeField]
+    Vector3 position2;
 
-    float timeElapsed;
-
-    Vector3 offset;
 
     // Start is called before the first frame update
     void Start()
     {
-        timeElapsed = 0;
-        offset = transform.position - playerTransform.position;
-        //transform.position = playerTransform.position - new Vector3(-yDistance, zDistance);
-        transform.LookAt(playerTransform.transform);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-        //if (timeElapsed < lerpDuration)
-        //{
-        //    transform.position = Vector3.Lerp(transform.position, playerTransform.position + offset, timeElapsed / lerpDuration);
-        //    transform.LookAt(playerTransform.transform);
-        //    timeElapsed += Time.deltaTime;
-        //}
-        //else
-        //{
-        //    transform.position = playerTransform.position +offset;
-        //    transform.LookAt(playerTransform.transform);
-        //}
-
-
-       // transform.position = Vector3.Lerp(transform.position, playerTransform.position - new Vector3(0, -yDistance, zDistance), sensitivity);
-       // transform.LookAt(playerTransform.transform);
+        intialOffset = transform.position - playerTransform.position;
     }
 
     private void LateUpdate()
     {
-        
-        //transform.position = playerTransform.position + offset;
-        if(timeElapsed < lerpDuration)
+        cameraPosition = playerTransform.position + intialOffset;
+        //transform.position = cameraPosition;
+
+        //using lerp
+        transform.position = Vector3.Lerp(transform.position, cameraPosition, smoothness * Time.deltaTime);
+        transform.LookAt(playerTransform);
+
+        //adding relative positions
+        cameraPosition = playerTransform.position + CameraOffset(relativePosition);
+        transform.position = Vector3.Lerp(transform.position, cameraPosition, smoothness*Time.deltaTime);
+        transform.LookAt(playerTransform);
+    }
+
+    Vector3 CameraOffset (RelativePosition relativePos)
+    {
+        Vector3 currentOffset;
+
+        switch (relativePos)
         {
-            transform.position = Vector3.Lerp(transform.position, playerTransform.position + offset, timeElapsed / lerpDuration);
-            timeElapsed += Time.deltaTime;
-        }
-        else
-        {
-            transform.position = playerTransform.position + offset;
-            timeElapsed = 0;
+            case RelativePosition.Position1:
+                currentOffset = position1;
+                break;
+
+            case RelativePosition.Position2:
+                currentOffset = position2;
+                break;
+
+            default:
+                currentOffset = intialOffset;
+                break;
         }
 
-        transform.LookAt(playerTransform.transform);
+        return currentOffset;
     }
+
 
 }
