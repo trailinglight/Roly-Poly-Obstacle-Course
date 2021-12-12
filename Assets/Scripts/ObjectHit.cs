@@ -17,10 +17,11 @@ public class ObjectHit : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-    
-        Debug.Log("Bumped into an obstacle!");
-
-        StartCoroutine(Blink());
+        if (collision.gameObject.tag == "Player")
+        {
+            StartCoroutine(Blink());
+        }
+        //Debug.Log("Bumped into an obstacle!");
         
     }
 
