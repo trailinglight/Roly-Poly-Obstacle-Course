@@ -8,11 +8,6 @@ public class Spinner : MonoBehaviour
     Vector3 eulerAngles = new Vector3 (0, 0, 0);
     [SerializeField] float rotationSpeed = 1.0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

@@ -5,17 +5,43 @@ using UnityEngine;
 public class Bumper: MonoBehaviour
 {
     [SerializeField] float impulseForce = 10.0f;
+    [SerializeField] bool blink = false;
+    [SerializeField] float intialDelay = 2.0f, delay = 2.0f, blinkTime = 2.0f;
+    MeshRenderer meshRenderer;
+    CapsuleCollider capsuleCollider;
+    
+    float nextDelay;
 
-    // Start is called before the first frame update
-    void Start()
+
+
+    private void Start()
     {
-        
+        nextDelay = intialDelay;
+        meshRenderer = GetComponent<MeshRenderer>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+       // Debug.Log(Time.time);
+        //Debug.Log(nextDelay);
+        if (blink == true)
+        {
+            if (Time.time >= nextDelay && meshRenderer.enabled)
+            {
+                nextDelay += (blinkTime + delay);
+                meshRenderer.enabled = false;
+                capsuleCollider.enabled = false;
+                
+                //StartCoroutine(Blink());
+
+            } else if(Time.time > nextDelay - delay)
+            {
+                meshRenderer.enabled = true;
+                capsuleCollider.enabled = true;
+            }
+
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -23,6 +49,19 @@ public class Bumper: MonoBehaviour
         Vector3 forceDirection = (collision.transform.position - transform.position).normalized;
 
         collision.rigidbody.AddForce(forceDirection * impulseForce, ForceMode.Impulse);
-        //collision.rigidbody.AddForce( 9.0f, ForceMode.Impulse);
+    }
+
+    IEnumerator Blink()
+    {
+
+        yield return new WaitForSeconds(blinkTime);
+
+        meshRenderer.enabled = true;
+        capsuleCollider.enabled = true;
+        //nextDelay += Time.time + delay;
+
+
+        yield return null;
+
     }
 }

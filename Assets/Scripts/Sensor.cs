@@ -7,7 +7,7 @@ public class Sensor : MonoBehaviour
     new BoxCollider collider;
     //public bool sensorTriggered = false;
 
-    public bool sensorTriggered { get; private set; }
+    public bool sensorTriggered { get;  set; }
     
     // Start is called before the first frame update
     void Start()
